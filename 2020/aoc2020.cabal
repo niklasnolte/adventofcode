@@ -1,0 +1,11 @@
+Name:           aoc2020
+Version:        0.1
+cabal-version:  >= 1.2
+Build-Type:     Simple
+
+Executable 1
+  Build-Depends:  base,
+                  mtl,
+                  safe
+  Main-Is:        1.hs
+

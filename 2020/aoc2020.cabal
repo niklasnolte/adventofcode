@@ -9,3 +9,7 @@ Executable 1
                   safe
   Main-Is:        1.hs
 
+Executable 2
+  Build-Depends:  base,
+                  parsec
+  Main-Is:        2.hs

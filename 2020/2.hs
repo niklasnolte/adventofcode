@@ -1,11 +1,7 @@
 import Text.ParserCombinators.Parsec (char, endBy, many, digit, space, lower, GenParser, string, parse)
 import Control.Exception (assert)
 
-data Policy = Policy {
-                getMin :: Int,
-                getMax :: Int,
-                getChar :: Char
-              } deriving (Show, Eq)
+data Policy = Policy Int Int Char deriving (Show, Eq)
 
 inputFileP :: GenParser Char st [(Policy, String)]
 inputFileP = lineP `endBy` char '\n'

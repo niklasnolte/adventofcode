@@ -25,3 +25,9 @@ Executable 4
                   parsec,
                   containers
   Main-Is:        4.hs
+
+Executable 5
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        5.hs

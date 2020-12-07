@@ -44,7 +44,7 @@ binaryPartition [] (l,h) =
 binaryPartition (r:rs) (l,h) = case r of
   0 -> binaryPartition rs (l, half)
   1 -> binaryPartition rs (half+1, h)
-  where half = (h-l) `div` 2 + l
+  where half = (h+l) `div` 2
 
 binaryPartitionRows :: [RowSelector] -> Maybe Int
 binaryPartitionRows rs =

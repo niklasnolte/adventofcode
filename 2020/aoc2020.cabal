@@ -28,6 +28,17 @@ Executable 4
 
 Executable 5
   Build-Depends:  base,
-                  parsec,
                   containers
   Main-Is:        5.hs
+
+Executable 6
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        6.hs
+
+Executable 7
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        7.hs

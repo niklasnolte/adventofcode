@@ -42,3 +42,11 @@ Executable 7
                   parsec,
                   containers
   Main-Is:        7.hs
+
+Executable 8
+  Build-Depends:  base,
+                  vector,
+                  mtl,
+                  unordered-containers,
+                  safe
+  Main-Is:        8.hs

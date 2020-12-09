@@ -50,3 +50,9 @@ Executable 8
                   unordered-containers,
                   safe
   Main-Is:        8.hs
+
+Executable 9
+  Build-Depends:  base,
+                  vector,
+                  dequeue
+  Main-Is:        9.hs

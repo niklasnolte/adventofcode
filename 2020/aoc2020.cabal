@@ -54,6 +54,5 @@ Executable 8
 Executable 9
   Build-Depends:  base,
                   vector,
-                  dequeue,
                   mtl
   Main-Is:        9.hs

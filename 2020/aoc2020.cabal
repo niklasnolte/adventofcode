@@ -56,3 +56,9 @@ Executable 9
                   vector,
                   mtl
   Main-Is:        9.hs
+
+Executable 10
+  Build-Depends:  base,
+                  mtl,
+                  split
+  Main-Is:        10.hs

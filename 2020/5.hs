@@ -1,9 +1,5 @@
-import Debug.Trace (trace)
 import Control.Exception (assert)
 import Data.List(sort, find)
-
-tr :: (Show a) => a -> a
-tr x = trace (show x) x
 
 data RowSelector = TakeFront | TakeBack deriving (Enum, Show)
 data ColSelector = TakeLeft | TakeRight deriving (Enum, Show)

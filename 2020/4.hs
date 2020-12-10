@@ -1,11 +1,8 @@
 import Text.ParserCombinators.Parsec
-import Debug.Trace (trace)
 import qualified Data.Map as Map
 import qualified Data.List as List
 import Control.Exception (assert)
 
-tr :: (Show a) => a -> a
-tr x = trace (show x) x
 
 requiredFields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 

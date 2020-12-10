@@ -6,14 +6,11 @@ import qualified Data.Vector as V
 import Data.Vector.Generic.Mutable(write)
 import qualified Data.HashSet as Set
 import Text.Read (readMaybe)
-import Debug.Trace (trace)
 
 data InstrType = Nop | Acc | Jmp deriving (Enum, Show)
 type Instr = (InstrType, Int)
 type History = Set.HashSet Int
 type Program = V.Vector Instr
-
-tr x = trace (show x) x
 
 toInstrType :: String -> Maybe InstrType
 toInstrType "nop" = Just Nop

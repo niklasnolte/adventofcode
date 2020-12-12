@@ -67,3 +67,7 @@ Executable 11
   Build-Depends:  base,
                   unordered-containers
   Main-Is:        11.hs
+
+Executable 12
+  Build-Depends:  base
+  Main-Is:        12.hs

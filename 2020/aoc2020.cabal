@@ -71,3 +71,15 @@ Executable 11
 Executable 12
   Build-Depends:  base
   Main-Is:        12.hs
+
+Executable 13
+  Build-Depends:  base,
+                  split
+  Main-Is:        13.hs
+
+Executable 14
+  Build-Depends:  base,
+                  parsec,
+                  mtl,
+                  containers
+  Main-Is:        14.hs

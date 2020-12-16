@@ -80,6 +80,12 @@ Executable 13
 Executable 14
   Build-Depends:  base,
                   parsec,
-                  mtl,
                   containers
   Main-Is:        14.hs
+
+Executable 15
+  Build-Depends:  base,
+                  containers,
+                  split
+  GHC-Options:    -O2
+  Main-Is:        15.hs

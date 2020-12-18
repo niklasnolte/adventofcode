@@ -42,7 +42,7 @@ parseInput inp = do
   let height = length inp'
   let width = length $ takeWhile (/='\n') inp
   let points = [(a,b) | a <- [0..height-1], b <- [0..width-1]]
-  objs <- mapM toObject $ foldl1 (++) inp'
+  objs <- mapM toObject $ concat inp'
   return $ Map.fromList $ zip points objs
 
 type CountingFunT = Position -> SeatConf -> Int

@@ -96,3 +96,9 @@ Executable 16
                   containers
   GHC-Options:    -O2
   Main-Is:        16.hs
+
+Executable 17
+  Build-Depends:  base,
+                  containers
+  GHC-Options:    -O2
+  Main-Is:        17.hs

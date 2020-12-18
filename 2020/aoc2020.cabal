@@ -89,3 +89,10 @@ Executable 15
                   split
   GHC-Options:    -O2
   Main-Is:        15.hs
+
+Executable 16
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  GHC-Options:    -O2
+  Main-Is:        16.hs

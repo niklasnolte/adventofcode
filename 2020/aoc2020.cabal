@@ -108,3 +108,10 @@ Executable 18
                   safe
   GHC-Options:    -O2
   Main-Is:        18.hs
+
+Executable 19
+  Build-Depends:  base,
+                  parsec,
+                  containers,
+                  safe
+  Main-Is:        19.hs

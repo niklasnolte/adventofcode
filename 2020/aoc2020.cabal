@@ -112,6 +112,17 @@ Executable 18
 Executable 19
   Build-Depends:  base,
                   parsec,
-                  containers,
-                  safe
+                  containers
   Main-Is:        19.hs
+
+Executable 20
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        20.hs
+
+Executable 21
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        21.hs

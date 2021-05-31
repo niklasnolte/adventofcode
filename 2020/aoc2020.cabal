@@ -132,3 +132,9 @@ Executable 22
                   parsec,
                   containers
   Main-Is:        22.hs
+
+Executable 23
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        23.hs

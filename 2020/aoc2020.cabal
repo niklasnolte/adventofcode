@@ -135,6 +135,11 @@ Executable 22
 
 Executable 23
   Build-Depends:  base,
-                  parsec,
                   containers
   Main-Is:        23.hs
+
+Executable 24
+  Build-Depends:  base,
+                  parsec,
+                  containers
+  Main-Is:        24.hs

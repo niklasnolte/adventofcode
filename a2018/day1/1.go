@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bufio"
+	"AOC2018/aocutils"
 	"fmt"
-	"os"
 	"strconv"
 )
 
@@ -55,21 +54,11 @@ func part2(input []string) {
 }
 
 func main() {
-	file, err := os.Open("input1.txt")
+	input, err := aocutils.ReadInput("input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanWords)
-
-	var input []string
-	for scanner.Scan() {
-		inpi := scanner.Text()
-		input = append(input, inpi)
-	}
-
 	part1(input)
 	part2(input)
 }

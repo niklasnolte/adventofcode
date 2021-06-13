@@ -3,8 +3,10 @@ package aocutils
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
+	"strconv"
 )
 
 func Max(x, y int) int {
@@ -19,6 +21,14 @@ func Min(x, y int) int {
 		return x
 	}
 	return y
+}
+
+func ParseInt(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return i
 }
 
 func ReadLines(which string) ([]string, error) {

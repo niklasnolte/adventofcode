@@ -54,7 +54,7 @@ func part2(input []string) {
 }
 
 func main() {
-	input, err := aocutils.ReadInput("input1.txt")
+	input, err := aocutils.ReadLines("input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return

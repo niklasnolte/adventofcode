@@ -9,18 +9,34 @@ import (
 	"strconv"
 )
 
-func Max(x, y int) int {
+func MaxInt(x, y int) int {
 	if x < y {
 		return y
 	}
 	return x
 }
 
-func Min(x, y int) int {
+func MinInt(x, y int) int {
 	if x < y {
 		return x
 	}
 	return y
+}
+
+func AbsInt(x int) int {
+	if x >= 0 {
+		return x
+	} else {
+		return -x
+	}
+}
+
+func MaxIntInSlice(x []int) int {
+	max := 0
+	for _, v := range x {
+		max = MaxInt(v, max)
+	}
+	return max
 }
 
 func ParseInt(s string) int {

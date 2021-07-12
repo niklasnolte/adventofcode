@@ -69,10 +69,10 @@ func parseClaims(input []string) []Claim {
 }
 
 func intersect(c1, c2 Claim) bool {
-	ulx := aocutils.Max(c1.ul.x, c2.ul.x)
-	uly := aocutils.Max(c1.ul.y, c2.ul.y)
-	lrx := aocutils.Min(c1.lr.x, c2.lr.x)
-	lry := aocutils.Min(c1.lr.y, c2.lr.y)
+	ulx := aocutils.MaxInt(c1.ul.x, c2.ul.x)
+	uly := aocutils.MaxInt(c1.ul.y, c2.ul.y)
+	lrx := aocutils.MinInt(c1.lr.x, c2.lr.x)
+	lry := aocutils.MinInt(c1.lr.y, c2.lr.y)
 
 	return !(ulx >= lrx || uly >= lry)
 }

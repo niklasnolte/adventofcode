@@ -60,7 +60,7 @@ func part2(input string) {
 	for _, x := range "abcdefghijklmnopqrstuvwxyz" {
 		replacer := strings.NewReplacer(string(x), "", string(unicode.ToUpper(x)), "")
 		removedX := replacer.Replace(input)
-		min = aocutils.Min(evalPolymer(removedX), min)
+		min = aocutils.MinInt(evalPolymer(removedX), min)
 	}
 	fmt.Println(min)
 }

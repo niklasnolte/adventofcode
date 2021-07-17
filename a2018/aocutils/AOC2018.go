@@ -47,6 +47,19 @@ func ParseInt(s string) int {
 	return i
 }
 
+func Read(fileName string) (string, error) {
+	file, err := os.Open(fileName)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		return scanner.Text(), nil
+	}
+	return "", scanner.Err()
+}
+
 func ReadLines(which string) ([]string, error) {
 	var ret []string
 

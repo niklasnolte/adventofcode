@@ -10,19 +10,19 @@ end
 
 btoi(b) = @pipe convert.(Int8, b) |> parse(Int, string(_...), base=2)
 
-function part1(input::Array{Bool,2})
-  gamma = sum(input, dims=1)/size(input, 1) .>= 0.5
-  delta = (gamma .- 1) .* -1
-  g,d = [gamma, delta] .|> btoi
-  println(g*d)
-end
-
 function most_common(l)
   return @pipe sum(l) / length(l) |> (_>=.5) |> convert(Int8, _)
 end
 
 function least_common(l)
   return @pipe sum(l) / length(l) |> (_<.5) |> convert(Int8, _)
+end
+
+function part1(input::Array{Bool,2})
+  gamma = eachcol(input) .|> most_common
+  delta = (gamma .- 1) .* -1
+  g,d = [gamma, delta] .|> btoi
+  println(g*d)
 end
 
 function extract_rating(ratings, policy)

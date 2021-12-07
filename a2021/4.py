@@ -1,5 +1,5 @@
 import numpy as np
-from IPython import embed
+from numpy import ma
 
 
 def read_random_numbers(txt):
@@ -7,7 +7,7 @@ def read_random_numbers(txt):
 
 
 def read_bingo_line(line):
-    return [int(n) for n in line.split(" ") if n not in ["", "\n"]]
+    return list(map(int, line.split()))
 
 
 def read_bingo_boards(lines):
@@ -25,18 +25,17 @@ def get_winner_score(rns, bs):
 
 
 def get_loser_score(rns, bs):
-    tags = np.zeros_like(bs, dtype=bool)
     havent_won = np.ones(len(bs), dtype=bool)
+    bs = ma.array(bs, mask=np.zeros_like(bs))
     for rn in rns:
-        tags = tags[havent_won]
         bs = bs[havent_won]
         havent_won = havent_won[havent_won]
-        tags |= bs == rn
-        for i, t in enumerate(tags):
+        bs[bs == rn] = ma.masked
+        for i, t in enumerate(bs.mask):
             if t.all(axis=1).any() or t.all(axis=0).any():
                 havent_won[i] = False
-            if len(tags) == 1 and havent_won[0] == False:
-                return rn * sum(bs[i][~t])
+            if len(bs.mask) == 1 and havent_won[0] == False:
+                return rn * bs[i].sum()
 
 
 def main():

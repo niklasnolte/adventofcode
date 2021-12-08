@@ -14,35 +14,33 @@ end
 
 getUniqueEntries(x) = [c for c in join(x) if count(x -> x == c, join(x)) == 1]
 
+function popfirst!(f, x)
+  idx = findfirst(f, x)
+  out = x[idx]
+  deleteat!(x, idx)
+  return out
+end
+
 function orderExamples(examples::Vector{String})::Vector{String}
   findlenN(n) = findfirst(x -> length(x) == n, examples)
-  repr1, repr7, repr4, repr8 = examples[[2, 3, 4, 7].|>findlenN]
-  len5s = examples[findall(x -> length(x) == 5, examples)]
+  reprs = repeat([""], 10)
+  # careful! reprs[n+1] refers to digit n
+  reprs[[2,8,5,9]] = examples[[2, 3, 4, 7].|>findlenN]
+  len5s, len6s = @pipe [5, 6] .|> examples[findall(x -> length(x) == _, examples)]
+
   unique5s = getUniqueEntries(len5s)
-  in4 = unique5s .|> x -> x in repr4
-  B = unique5s[in4][1]
-  E = unique5s[.~in4][1]
-  repr5 = [x for x in len5s if B in x][1]
-  repr2 = [x for x in len5s if E in x][1]
-  repr3 = [x for x in len5s if ~(x in [repr5, repr2])][1]
+  B = popfirst!(x -> x in reprs[5], unique5s)
+  E = unique5s[1]
 
-  len6s = examples[findall(x -> length(x) == 6, examples)]
-  repr9 = [x for x in len6s if ~(E in x)][1]
-  repr0 = [x for x in len6s if all(n in x for n in repr7) && ~(x == repr9)][1]
-  repr6 = [x for x in len6s if ~(x in [repr0, repr9])][1]
+  reprs[6] = popfirst!(x -> B in x, len5s)
+  reprs[3] = popfirst!(x -> E in x, len5s)
+  reprs[4] = len5s[1]
 
-  return [
-           repr0,
-           repr1,
-           repr2,
-           repr3,
-           repr4,
-           repr5,
-           repr6,
-           repr7,
-           repr8,
-           repr9
-         ] .|> collect .|> sort .|> join
+  reprs[10] = popfirst!(x -> ~(E in x), len6s)
+  reprs[1] = popfirst!(x -> all(n in x for n in reprs[8]), len6s)
+  reprs[7] = len6s[1]
+
+  return reprs .|> collect .|> sort .|> join
 end
 
 function findIndices(map::Vector{String}, digits::Vector{String})#::Int32

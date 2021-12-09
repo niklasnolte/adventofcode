@@ -4,30 +4,9 @@ read_input() = @pipe readlines("input9.txt") .|> collect .|> parse.(Int32, _)
 
 function neighbors(x::Integer, y::Integer, grid::Matrix{Int32})::Vector{CartesianIndex{2}}
   #assume at least size (2,2)
-  if x == 1
-    if y == 1
-      idxs = [(2, 1), (1, 2)]
-    elseif y == size(grid, 2)
-      idxs = [(2, y), (1, y - 1)]
-    else
-      idxs = [(2, y), (1, y - 1), (1, y + 1)]
-    end
-  elseif x == size(grid, 1)
-    if y == 1
-      idxs = [(x - 1, 1), (x, 2)]
-    elseif y == size(grid, 2)
-      idxs = [(x - 1, y), (x, y - 1)]
-    else
-      idxs = [(x - 1, y), (x, y - 1), (x, y + 1)]
-    end
-  elseif y == 1
-    idxs = [(x - 1, 1), (x, 2), (x + 1, 1)]
-  elseif y == size(grid, 2)
-    idxs = [(x - 1, y), (x, y - 1), (x + 1, y)]
-  else
-    idxs = [(x - 1, y), (x, y - 1), (x, y + 1), (x + 1, y)]
-  end
-  return idxs .|> CartesianIndex
+  is_in_bounds((x,y)) = x > 0 && x <= size(grid, 1) && y > 0 && y <= size(grid, 2)
+  idxs = [(x - 1, y), (x, y - 1), (x, y + 1), (x + 1, y)]
+  return filter(is_in_bounds, idxs) .|> CartesianIndex
 end
 
 isPit((x, y), grid) = all(grid[neighbors(x, y, grid)] .> grid[x, y])

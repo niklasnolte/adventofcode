@@ -86,21 +86,15 @@ end
 function parsePacket(p::AbstractString)::Tuple{AbstractString, AbstractPacket}
   V = p[1:3] |> bin
   T = p[4:6] |> bin
-  if T == 4
-    p, val = parseLiteralContent(p[7:end])
-    return p, Literal(V, T, val)
-  else
-    p, val = parseOperatorContent(p[7:end])
-    return p, Operator(V, T, val)
-  end
+  which = (T == 4) + 1
+  parsers = (parseOperatorContent, parseLiteralContent)
+  constrs = (Operator, Literal)
+  p, val = parsers[which](p[7:end])
+  return p, constrs[which](V, T, val)
 end
 
 function sumVersionNumbers(p::AbstractPacket)::Int64
-  if p isa Literal
-    return version(p)
-  elseif p isa Operator
-    return version(p) + (sumVersionNumbers.(content(p)) |> sum)
-  end
+  version(p) + ((p isa Operator) ? sumVersionNumbers.(content(p)) |> sum : 0)
 end
 
 function part1(inp::String)

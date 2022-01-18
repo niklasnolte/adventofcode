@@ -18,6 +18,14 @@ stepCost = Dict(
   D => 1000
 )
 
+
+bagFor = Dict(
+  A => 2,
+  B => 4,
+  C => 6,
+  D => 8
+)
+
 allPositions = Set(
   [
   (0, 0),
@@ -35,17 +43,22 @@ allPositions = Set(
   (6, 2),
   (8, 1),
   (8, 2),
-]
+  ]
 )
 
-bagFor = Dict(
-  A => 2,
-  B => 4,
-  C => 6,
-  D => 8
+allPositionsp2 = allPositions
+push!(allPositionsp2,
+  (2, 3),
+  (2, 4),
+  (4, 3),
+  (4, 4),
+  (6, 3),
+  (6, 4),
+  (8, 3),
+  (8, 4),
 )
 
-function getInput()::Board
+function getInput(p2=false)::Board
   input = read("input23.txt", String)
   letters = filter(isuppercase, input)
   poss = (
@@ -53,12 +66,25 @@ function getInput()::Board
     (4, 1),
     (6, 1),
     (8, 1),
-    (2, 2),
-    (4, 2),
-    (6, 2),
-    (8, 2),
+    (2, p2 ? 4 : 2),
+    (4, p2 ? 4 : 2),
+    (6, p2 ? 4 : 2),
+    (8, p2 ? 4 : 2),
   )
-  return Dict(p => letterToPod[l] for (p, l) in zip(poss, letters))
+  board = Dict(p => letterToPod[l] for (p, l) in zip(poss, letters))
+  if p2
+    #D#C#B#A#
+    #D#B#A#C#
+    board[(2,2)] = D
+    board[(2,3)] = D
+    board[(4,2)] = C
+    board[(4,3)] = B
+    board[(6,2)] = B
+    board[(6,3)] = A
+    board[(8,2)] = A
+    board[(8,3)] = C
+  end
+  return board
 end
 
 
@@ -68,7 +94,8 @@ function moveCost(pod::Pod, from::Position, to::Position)::Int64
   return (abs(ty - fy) + abs(tx - fx)) * stepCost[pod]
 end
 
-function canMove(from::Position, to::Position, board::Board)::Bool
+function canMove(from::Position, to::Position, board::Board, p2=false)::Bool
+  depth = p2 ? 4 : 2
   fx, fy = from
   tx, ty = to
   pod = board[from]
@@ -78,7 +105,13 @@ function canMove(from::Position, to::Position, board::Board)::Bool
     if ty != 0
       return false
     elseif bagFor[pod] == fx # dont move out if already in place
-      if get(board, (fx, 2), pod) == pod
+      movable = false
+      for y in fy+1:depth
+        if board[(fx, y)] != pod
+          movable = true
+        end
+      end
+      if movable == false
         return false
       end
     end
@@ -90,8 +123,12 @@ function canMove(from::Position, to::Position, board::Board)::Bool
     if tx != bagFor[pod]
       return false
       # make sure to move fully down if possible
-    elseif ty == 1 && (!((tx, 2) in keys(board)) || board[(tx, 2)] != pod)
-      return false
+    elseif ty < depth
+      for y in ty+1:depth
+        if !((tx, y) in keys(board)) || board[(tx, y)] != pod
+          return false
+        end
+      end
     end
   end
   # path is clear?
@@ -116,20 +153,20 @@ function canMove(from::Position, to::Position, board::Board)::Bool
   return true
 end
 
-function possibleMoves(pos::Position, board::Board)::Vector{Position}
+function possibleMoves(pos::Position, board::Board, p2=false)::Vector{Position}
   moves = Vector{Position}()
-  for target in allPositions
-    if canMove(pos, target, board)
+  for target in (p2 ? allPositionsp2 : allPositions)
+    if canMove(pos, target, board, p2)
       push!(moves, target)
     end
   end
   return moves
 end
 
-function manyWorlds(board::Board)::Vector{Tuple{Board,Int64}}
+function manyWorlds(board::Board, p2=false)::Vector{Tuple{Board,Int64}}
   outcomes = Vector{Tuple{Board,Int64}}()
   for (pos, pod) in board
-    for newpos in possibleMoves(pos, board)
+    for newpos in possibleMoves(pos, board, p2)
       nextpods = copy(board)
       delete!(nextpods, pos)
       nextpods[newpos] = pod
@@ -151,7 +188,7 @@ function finished(board::Board)::Bool
   return true
 end
 
-function part1(board::Board)
+function solve(board::Board)
   boards = PriorityQueue(board => 0)
   seen = Dict(board => 0)
   while length(boards) > 0
@@ -161,7 +198,7 @@ function part1(board::Board)
       println(cost)
       break
     end
-    for (nb, nc) in manyWorlds(board)
+    for (nb, nc) in manyWorlds(board, length(board) == 16)
       newcost = cost + nc
       if get(seen, nb, 1e20) > newcost
         boards[nb] = newcost
@@ -171,9 +208,14 @@ function part1(board::Board)
   end
 end
 
+part1 = solve
+part2 = solve
+
 function main()
   board = getInput()
   part1(board)
+  boardp2 = getInput(true)
+  part2(boardp2)
 end
 
 main()
